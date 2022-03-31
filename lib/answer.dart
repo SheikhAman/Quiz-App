@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Answer extends StatelessWidget {
-  final VoidCallback questionCounter;
+  var questionCounter;
   String answerText;
-  Answer(this.questionCounter, this.answerText, {Key? key}) : super(key: key);
+  Answer({required this.answerText, required this.questionCounter});
 
   @override
   Widget build(BuildContext context) {

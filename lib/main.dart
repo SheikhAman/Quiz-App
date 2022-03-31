@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/result.dart';
 
 import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,9 +45,21 @@ class _MyAppState extends State<MyApp> {
       ],
     },
   ];
+
   var _questionIndex = 0;
-  void _answerQuestion() {
+  var _totalScore = 0;
+
+  void _resetQuiz() {
     setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int? score) {
+    // _totalScore = _totalScore + score;
+    setState(() {
+      _totalScore += score!;
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
@@ -60,20 +73,22 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
           appBar: AppBar(
-            title: Text('My First App'),
+            backgroundColor: Colors.teal,
+            title: Text('Quiz App'),
           ),
           body: _questionIndex < _questions.length
               ? Quiz(
                   questions: _questions,
                   answerQuestion: _answerQuestion,
                   questionIndex: _questionIndex)
-              : Result()),
+              : Result(_totalScore, _resetQuiz)),
     );
   }
 }
